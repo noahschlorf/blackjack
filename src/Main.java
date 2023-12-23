@@ -3,6 +3,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        // game start
+
         /* 
         System.out.print("Enter the number of decks: ");
         int numberOfDecks = scanner.nextInt();
@@ -20,13 +22,13 @@ public class Main {
         boolean dealerHitsSoft17 = false;
 
         GameLogic game = new GameLogic(numberOfDecks, numberOfPlayers, dealerHitsSoft17);
-
+        // enters the player bets for all the hands
         for (int i = 0; i < numberOfPlayers; i++) {
             System.out.print("Enter the bet you would like to place for player " + (i + 1) + ": ");
             double betAmount = scanner.nextDouble();
             game.getPlayerHand(i).setBet(betAmount);
         }
-
+        // prints out the player hands and checks for blackjack
         for (int i = 0; i < numberOfPlayers; i++) {
             Hand playerHand = game.getPlayerHand(i);
             System.out.println("Player " + (i + 1) + "'s hand: " + playerHand);
@@ -36,9 +38,10 @@ public class Main {
                 System.out.println("Player " + (i + 1) + " does not have Blackjack.");
             }
         }
-
+        // shows one dealer card
         System.out.println("Dealer's shown card: " + game.getDealerFirstCard());
 
+        // main game loop
         scanner.close();
     }
 }
