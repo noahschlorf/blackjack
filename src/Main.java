@@ -44,8 +44,10 @@ public class Main {
         System.out.println("\u001B[91mDealer's shown card: " + game.getDealerFirstCard() + "\u001B[0m");
 
         //starts the game
-        for (int i = 0; i < numberOfPlayers; i++) {
-            Hand playerHand = game.getPlayerHand(i);
+        int currentPlayer = 0;
+        int i = 0;
+        while (currentPlayer < game.getNumberOfPlayers()) {
+            Hand playerHand = game.getPlayerHand(currentPlayer);
             System.out.println("Player " + (i + 1) + "'s hand: " + playerHand);
             
             boolean turnEnded = false;
@@ -90,57 +92,63 @@ public class Main {
                             String splitCard = playerHand.removeCard();
                             Hand newHand = new Hand();
                             newHand.addCard(splitCard); 
-                            game.hit(newHand);
-                            game.hit(playerHand);
-                            numberOfPlayers++; 
-                            turnEnded = true; 
+                            newHand.setBet(playerHand.getBet()); // Sets the players bet to the new hand
+                            balance -= newHand.getBet();
+                            game.hit(newHand); // Add a card to the new hand
+                            game.hit(playerHand); // Add a card to the existing hand
+                            game.addHandAfterCurrent(i, newHand); // Insert the new hand after the current hand
                         }
                         break;
-                    
                     default:
                         System.out.println("Invalid choice. Please choose again.");
                 }
                 if (!turnEnded) {
                     System.out.println("Player " + (i + 1) + "'s hand: " + game.getPlayerHand(i));
                 }
+                if (turnEnded) {
+                    currentPlayer++;
+                }
             }
-
+            i++;
         }
-        List<String> deckCards = game.getDeckCards();
+
+        /*List<String> deckCards = game.getDeckCards();
         System.out.println("Deck Cards:");
         for (String card : deckCards) {
             System.out.println(card);
         }        scanner.close();
-
+        */
         game.dealerPlay();
         Hand dealerHand = game.getDealerHand();
         System.out.println("Dealer's final hand: " + dealerHand);
         
-        for (int i = 0; i < numberOfPlayers; i++) {
+        for (i = 0; i < game.getNumberOfPlayers(); i++) {
             Hand playerHand = game.getPlayerHand(i);
             double betAmount = playerHand.getBet();
+            System.out.println("Player " + i+1 +" bet = " + playerHand.getBet());
             double payout = 0;
         
+            // Calculate payout based on the outcome
             if (playerHand.hasBlackjack()) {
                 if (dealerHand.hasBlackjack()) {
                     payout = betAmount;
                 } else {
-                    payout = betAmount + 1.5 * betAmount; 
+                    payout = betAmount + 1.5 * betAmount;
                 }
             } else if (playerHand.getTotalValue() > 21) {
-                payout = 0; 
+                payout = 0;
             } else if (dealerHand.getTotalValue() > 21 || playerHand.getTotalValue() > dealerHand.getTotalValue()) {
-                payout = betAmount + betAmount; 
+                payout = betAmount + betAmount;
             } else if (playerHand.getTotalValue() < dealerHand.getTotalValue()) {
-                payout = 0; 
+                payout = 0;
             } else {
                 payout = betAmount;
             }
         
-            balance += payout; 
+            balance += payout;
             System.out.println("Player " + (i + 1) + " outcome: " + (payout > betAmount ? "Win" : "Lose"));
             System.out.println("Player " + (i + 1) + " new balance: $" + balance);
-        }    
+        }
         scanner.close();
 
     }

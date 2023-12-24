@@ -3,8 +3,8 @@ import java.util.List;
 
 public class GameLogic {
     private CardDeck combinedDeck;
-    private Hand[] players;
-    private Hand dealer;  
+    private List<Hand> players;
+    private Hand dealer;
     private boolean dealerHitsSoft17;
 
     // sets up the game logic
@@ -19,27 +19,30 @@ public class GameLogic {
         // combines the deck into one and shuffles
         combinedDeck = new CardDeck(allDecksCombined);
         combinedDeck.shuffle();
-        // draws 2 cards for all players to start the game
-        players = new Hand[numberOfPlayers];
-        for (int i = 0; i < players.length; i++) {
-            players[i] = new Hand();
-            players[i].addCard("8 of Diamonds");
-            players[i].addCard("8 of Hearts");
-            /* 
-            players[i].addCard(combinedDeck.drawCard());
-            players[i].addCard(combinedDeck.drawCard());
-            */
+        // Initialize the players list and draw 2 cards for all players to start the game
+        players = new ArrayList<>(); // Initialized as ArrayList
+        for (int i = 0; i < numberOfPlayers; i++) {
+            Hand playerHand = new Hand();
+            playerHand.addCard("8 of Diamonds");
+            playerHand.addCard("8 of Hearts");
+            
+            /*
+            playerHand.addCard(combinedDeck.drawCard());
+            playerHand.addCard(combinedDeck.drawCard());
+             */
+            
+            players.add(playerHand); // Add the hand to the list
         }
-        // makes the dealers hand
+        // makes the dealer's hand
         dealer = new Hand();
         dealer.addCard(combinedDeck.drawCard());
         dealer.addCard(combinedDeck.drawCard());
     }
 
-    // returns a players hand
+    // returns a player's hand
     public Hand getPlayerHand(int playerIndex) {
-        if (playerIndex >= 0 && playerIndex < players.length) {
-            return players[playerIndex];
+        if (playerIndex >= 0 && playerIndex < players.size()) { // Use size() for List
+            return players.get(playerIndex); // Use get() for List
         }
         return null;
     }
@@ -74,5 +77,15 @@ public class GameLogic {
     public List<String> getDeckCards() {
         return combinedDeck.getCards();
     }
+
+    public void addHandAfterCurrent(int currentPlayerIndex, Hand newHand) {
+        players.add(currentPlayerIndex + 1, newHand);
+    }
+
+    public int getNumberOfPlayers() {
+        return players.size();
+    }
+    
+    
     
 }
