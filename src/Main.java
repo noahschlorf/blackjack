@@ -56,18 +56,15 @@ public class Main {
             while (!turnEnded) {
                 boolean canSplit = playerHand.canSplit();
                 boolean canDoubleDown = playerHand.canDoubleDown();
-
-                int splitOption = canSplit ? 3 : -1;
-                int doubleDownOption = canDoubleDown ? (canSplit ? 4 : 3) : -1; 
                 
                 System.out.println("Player " + (i + 1) + ", choose an action:");
                 System.out.println("1: Hit");
                 System.out.println("2: Stand");
-                if (canSplit) {
-                    System.out.println(splitOption + ": Split");
+                if(canDoubleDown){
+                    System.out.println("3: Double Down");
                 }
-                if (canDoubleDown) {
-                    System.out.println(doubleDownOption + ": Double Down");
+                if (canSplit) {
+                    System.out.println( "4: Split");
                 }
 
                 int choice = scanner.nextInt();
@@ -83,16 +80,17 @@ public class Main {
                         turnEnded = true; 
                         break;
                     case 3:
-                        if (canSplit && splitOption == 3) {
-                        } else if (canDoubleDown && doubleDownOption == 3) {
+                        if (canDoubleDown) {
+                            playerHand.doubleBet();
                             turnEnded = true;
+                            break;
                         }
-                        break;
                     case 4:
-                        if (canDoubleDown && doubleDownOption == 4) {
-                            turnEnded = true; 
+                        if (canSplit) {
+                            //split action
+                            break;
                         }
-                        break;
+                    
                     default:
                         System.out.println("Invalid choice. Please choose again.");
                 }
