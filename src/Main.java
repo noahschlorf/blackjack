@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -56,7 +57,7 @@ public class Main {
                 boolean canSplit = playerHand.canSplit();
                 boolean canDoubleDown = playerHand.canDoubleDown();
 
-                int splitOption = canSplit ? 3 : -1; //
+                int splitOption = canSplit ? 3 : -1;
                 int doubleDownOption = canDoubleDown ? (canSplit ? 4 : 3) : -1; 
                 
                 System.out.println("Player " + (i + 1) + ", choose an action:");
@@ -101,8 +102,11 @@ public class Main {
             }
 
         }
-
-        scanner.close();
+        List<String> deckCards = game.getDeckCards();
+        System.out.println("Deck Cards:");
+        for (String card : deckCards) {
+            System.out.println(card);
+        }        scanner.close();
 
         game.dealerPlay();
         Hand dealerHand = game.getDealerHand();
@@ -132,8 +136,7 @@ public class Main {
             balance += payout; 
             System.out.println("Player " + (i + 1) + " outcome: " + (payout > betAmount ? "Win" : "Lose"));
             System.out.println("Player " + (i + 1) + " new balance: $" + balance);
-        }
-        
+        }    
         scanner.close();
 
     }

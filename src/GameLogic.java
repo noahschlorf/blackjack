@@ -66,4 +66,9 @@ public class GameLogic {
     public void hit(Hand hand) {
         hand.addCard(drawCardFromDeck());
     }
+
+    public List<String> getDeckCards() {
+        return combinedDeck.getCards();
+    }
+    
 }
