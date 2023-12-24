@@ -19,7 +19,7 @@ public class Main {
         boolean dealerHitsSoft17 = input.equalsIgnoreCase("yes");
         */
         int numberOfDecks = 1;
-        int numberOfPlayers = 1;
+        int numberOfPlayers = 10;
         boolean dealerHitsSoft17 = false;
         double balance = 1000;
 
@@ -49,11 +49,11 @@ public class Main {
         while (currentPlayer < game.getNumberOfPlayers()) {
             Hand playerHand = game.getPlayerHand(currentPlayer);
             System.out.println("Player " + (i + 1) + "'s hand: " + playerHand);
-            
             boolean turnEnded = false;
             if (playerHand.hasBlackjack()){
                 System.out.println("Congrats, player " + (i + 1) + " has a blackjack");
                 turnEnded = true;
+                currentPlayer++;
             }
             while (!turnEnded) {
                 boolean canSplit = playerHand.canSplit();
@@ -76,6 +76,10 @@ public class Main {
                         if(playerHand.getTotalValue()>21){
                             System.out.println("Sorry you have busted!");
                             turnEnded = true; 
+                        }
+                        if(playerHand.getTotalValue()==21){
+                            System.out.println("\u001B[92m21!\u001B[0m");
+                            turnEnded = true;
                         }
                         break;
                     case 2:

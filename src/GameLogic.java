@@ -23,13 +23,14 @@ public class GameLogic {
         players = new ArrayList<>(); // Initialized as ArrayList
         for (int i = 0; i < numberOfPlayers; i++) {
             Hand playerHand = new Hand();
-            playerHand.addCard("8 of Diamonds");
+            /*playerHand.addCard("8 of Diamonds");
             playerHand.addCard("8 of Hearts");
+            */
             
-            /*
+            
             playerHand.addCard(combinedDeck.drawCard());
             playerHand.addCard(combinedDeck.drawCard());
-             */
+            
             
             players.add(playerHand); // Add the hand to the list
         }
