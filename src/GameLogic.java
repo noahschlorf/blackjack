@@ -23,8 +23,12 @@ public class GameLogic {
         players = new Hand[numberOfPlayers];
         for (int i = 0; i < players.length; i++) {
             players[i] = new Hand();
+            players[i].addCard("8 of Diamonds");
+            players[i].addCard("8 of Hearts");
+            /* 
             players[i].addCard(combinedDeck.drawCard());
             players[i].addCard(combinedDeck.drawCard());
+            */
         }
         // makes the dealers hand
         dealer = new Hand();

@@ -19,7 +19,7 @@ public class Main {
         boolean dealerHitsSoft17 = input.equalsIgnoreCase("yes");
         */
         int numberOfDecks = 1;
-        int numberOfPlayers = 3;
+        int numberOfPlayers = 1;
         boolean dealerHitsSoft17 = false;
         double balance = 1000;
 
@@ -85,11 +85,17 @@ public class Main {
                             turnEnded = true;
                             break;
                         }
-                    case 4:
+                        case 4:
                         if (canSplit) {
-                            //split action
-                            break;
+                            String splitCard = playerHand.removeCard();
+                            Hand newHand = new Hand();
+                            newHand.addCard(splitCard); 
+                            game.hit(newHand);
+                            game.hit(playerHand);
+                            numberOfPlayers++; 
+                            turnEnded = true; 
                         }
+                        break;
                     
                     default:
                         System.out.println("Invalid choice. Please choose again.");

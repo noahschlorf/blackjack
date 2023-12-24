@@ -5,7 +5,6 @@ public class Hand {
     private List<String> cards;
     private boolean hasBlackjack;
     private double bet;
-    private boolean win;
 
     private final String ANSI_GREEN = "\u001B[32m";
     private final String ANSI_YELLOW = "\u001B[33m";
@@ -15,7 +14,6 @@ public class Hand {
     public Hand() {
         this.cards = new ArrayList<>();
         this.hasBlackjack = false;
-        this.win = false;
     }
 
     // adds a card to the hand and checks for blackjack
@@ -24,8 +22,9 @@ public class Hand {
         checkForBlackjack();
     }   
     // removes a card from the players hand
-    public boolean removeCard(String card) {
-        return cards.remove(card);
+    public String removeCard() {
+        String removed = cards.remove(0);
+        return removed;
     }
     // checks if the hand is a blackjack
     private void checkForBlackjack() {
@@ -42,12 +41,28 @@ public class Hand {
     // determines if the player can split
     public boolean canSplit() {
         if (cards.size() == 2) {
-            String rank1 = cards.get(0).split(" ")[0];
-            String rank2 = cards.get(1).split(" ")[0];
-            return rank1.equals(rank2);
+            int rank1 = getValue(cards.get(0).split(" ")[0]);
+            int rank2 = getValue(cards.get(1).split(" ")[0]);
+            return rank1 == rank2;
         }
         return false;
-    }   
+    }       
+
+    public int getValue(String card) {
+        String rank = card.split(" ")[0];
+        switch (rank) {
+            case "Ace":
+                return 11;
+            case "Jack":
+            case "Queen":
+            case "King":
+                return 10;
+            default:
+                return Integer.parseInt(rank);
+        }
+    }
+    
+
     // determines if the player can double down
     public boolean canDoubleDown() {
         return cards.size() == 2 && !hasBlackjack;
@@ -93,6 +108,7 @@ public class Hand {
 
         return totalValue;
     }
+
     // clears the hand
     public void clearHand() {
         cards.clear();
