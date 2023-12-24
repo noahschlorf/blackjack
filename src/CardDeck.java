@@ -28,7 +28,7 @@ public class CardDeck {
     public void shuffle() {
         Collections.shuffle(cards);
     }
-    // gets a card off the top of the deck
+    // gets all the cards from a said deck
     public List<String> getCards() {
         return this.cards;
     }
@@ -39,8 +39,6 @@ public class CardDeck {
         }
         return null;
     }
-
-
     public String toString() {
         return String.join("\n", cards);
     }

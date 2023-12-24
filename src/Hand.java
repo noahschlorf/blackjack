@@ -5,11 +5,19 @@ public class Hand {
     private List<String> cards;
     private boolean hasBlackjack;
     private double bet;
+    private boolean win;
+
+    private final String ANSI_GREEN = "\u001B[32m";
+    private final String ANSI_YELLOW = "\u001B[33m";
+    private final String ANSI_RESET = "\u001B[0m";
+
     // used for keeping one players hand
     public Hand() {
         this.cards = new ArrayList<>();
         this.hasBlackjack = false;
+        this.win = false;
     }
+
     // adds a card to the hand and checks for blackjack
     public void addCard(String card) {
         cards.add(card);
@@ -42,7 +50,7 @@ public class Hand {
     }   
     // determines if the player can double down
     public boolean canDoubleDown() {
-        return cards.size() == 2;
+        return cards.size() == 2 && !hasBlackjack;
     }
     // used to set the bet size for a given hand
     public void setBet(double betAmount) {
@@ -99,20 +107,15 @@ public class Hand {
         }
         return false;
     }
+    
     // returns a string representation of the hand
     public String toString() {
-        String status = "Hand: " + String.join(", ", cards) + " | Value: " + getTotalValue();
+        String status = String.join(", ", cards) + " | Value: " + getTotalValue();
         
         if (hasBlackjack) {
-            status += " (Blackjack!)";
+            status += ANSI_GREEN + " (Blackjack!)" + ANSI_RESET;
         }
-        status += " | Bet: $" + bet;
-        if (canSplit()) {
-            status += " | Can Split";
-        }
-        if (canDoubleDown()) {
-            status += " | Can Double Down";
-        }
+        status += " | Bet: " + ANSI_YELLOW + "$" + bet + ANSI_RESET;
         return status;
     }
 }

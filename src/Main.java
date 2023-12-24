@@ -18,30 +18,133 @@ public class Main {
         boolean dealerHitsSoft17 = input.equalsIgnoreCase("yes");
         */
         int numberOfDecks = 1;
-        int numberOfPlayers = 1;
+        int numberOfPlayers = 3;
         boolean dealerHitsSoft17 = false;
+        double balance = 1000;
 
         GameLogic game = new GameLogic(numberOfDecks, numberOfPlayers, dealerHitsSoft17);
-        // enters the player bets for all the hands
+
         for (int i = 0; i < numberOfPlayers; i++) {
-            System.out.print("Enter the bet you would like to place for player " + (i + 1) + ": ");
+            /*System.out.print("Enter the bet you would like to place for player " + (i + 1) + ": ");
             double betAmount = scanner.nextDouble();
-            game.getPlayerHand(i).setBet(betAmount);
+            */
+            double betAmount = 10;
+            if (betAmount > 0 && betAmount <= balance) {
+                game.getPlayerHand(i).setBet(betAmount);
+                balance -= betAmount; 
+            } else {
+                System.out.println("Invalid bet amount for player " + (i + 1) + ". Bet must be greater than 0 and less than or equal to balance.");
+            }
         }
+        System.out.println("\u001B[32mBalance is: $" + balance + "\u001B[0m");
         // prints out the player hands and checks for blackjack
+        printPlayerHandsAndCheckBlackjack(game, numberOfPlayers);
+        // shows one dealer card
+        System.out.println("\u001B[91mDealer's shown card: " + game.getDealerFirstCard() + "\u001B[0m");
+
+        //starts the game
+        for (int i = 0; i < numberOfPlayers; i++) {
+            Hand playerHand = game.getPlayerHand(i);
+            System.out.println("Player " + (i + 1) + "'s hand: " + playerHand);
+            
+            boolean turnEnded = false;
+            if (playerHand.hasBlackjack()){
+                System.out.println("Congrats, player " + (i + 1) + " has a blackjack");
+                turnEnded = true;
+            }
+            while (!turnEnded) {
+                boolean canSplit = playerHand.canSplit();
+                boolean canDoubleDown = playerHand.canDoubleDown();
+
+                int splitOption = canSplit ? 3 : -1; //
+                int doubleDownOption = canDoubleDown ? (canSplit ? 4 : 3) : -1; 
+                
+                System.out.println("Player " + (i + 1) + ", choose an action:");
+                System.out.println("1: Hit");
+                System.out.println("2: Stand");
+                if (canSplit) {
+                    System.out.println(splitOption + ": Split");
+                }
+                if (canDoubleDown) {
+                    System.out.println(doubleDownOption + ": Double Down");
+                }
+
+                int choice = scanner.nextInt();
+                switch (choice) {
+                    case 1:
+                        game.hit(playerHand);
+                        if(playerHand.getTotalValue()>21){
+                            System.out.println("Sorry you have busted!");
+                            turnEnded = true; 
+                        }
+                        break;
+                    case 2:
+                        turnEnded = true; 
+                        break;
+                    case 3:
+                        if (canSplit && splitOption == 3) {
+                        } else if (canDoubleDown && doubleDownOption == 3) {
+                            turnEnded = true;
+                        }
+                        break;
+                    case 4:
+                        if (canDoubleDown && doubleDownOption == 4) {
+                            turnEnded = true; 
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please choose again.");
+                }
+                if (!turnEnded) {
+                    System.out.println("Player " + (i + 1) + "'s hand: " + game.getPlayerHand(i));
+                }
+            }
+
+        }
+
+        scanner.close();
+
+        game.dealerPlay();
+        Hand dealerHand = game.getDealerHand();
+        System.out.println("Dealer's final hand: " + dealerHand);
+        
+        for (int i = 0; i < numberOfPlayers; i++) {
+            Hand playerHand = game.getPlayerHand(i);
+            double betAmount = playerHand.getBet();
+            double payout = 0;
+        
+            if (playerHand.hasBlackjack()) {
+                if (dealerHand.hasBlackjack()) {
+                    payout = betAmount;
+                } else {
+                    payout = betAmount + 1.5 * betAmount; 
+                }
+            } else if (playerHand.getTotalValue() > 21) {
+                payout = 0; 
+            } else if (dealerHand.getTotalValue() > 21 || playerHand.getTotalValue() > dealerHand.getTotalValue()) {
+                payout = betAmount + betAmount; 
+            } else if (playerHand.getTotalValue() < dealerHand.getTotalValue()) {
+                payout = 0; 
+            } else {
+                payout = betAmount;
+            }
+        
+            balance += payout; 
+            System.out.println("Player " + (i + 1) + " outcome: " + (payout > betAmount ? "Win" : "Lose"));
+            System.out.println("Player " + (i + 1) + " new balance: $" + balance);
+        }
+        
+        scanner.close();
+
+    }
+
+    public static void printPlayerHandsAndCheckBlackjack(GameLogic game, int numberOfPlayers) {
         for (int i = 0; i < numberOfPlayers; i++) {
             Hand playerHand = game.getPlayerHand(i);
             System.out.println("Player " + (i + 1) + "'s hand: " + playerHand);
             if (playerHand.hasBlackjack()) {
                 System.out.println("Player " + (i + 1) + " has Blackjack!");
-            } else {
-                System.out.println("Player " + (i + 1) + " does not have Blackjack.");
             }
         }
-        // shows one dealer card
-        System.out.println("Dealer's shown card: " + game.getDealerFirstCard());
-
-        // main game loop
-        scanner.close();
     }
 }

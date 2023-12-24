@@ -6,6 +6,7 @@ public class GameLogic {
     private Hand[] players;
     private Hand dealer;  
     private boolean dealerHitsSoft17;
+
     // sets up the game logic
     public GameLogic(int numberOfDecks, int numberOfPlayers, boolean dealerHitsSoft17) {
         this.dealerHitsSoft17 = dealerHitsSoft17;
@@ -30,6 +31,7 @@ public class GameLogic {
         dealer.addCard(combinedDeck.drawCard());
         dealer.addCard(combinedDeck.drawCard());
     }
+
     // returns a players hand
     public Hand getPlayerHand(int playerIndex) {
         if (playerIndex >= 0 && playerIndex < players.length) {
@@ -37,18 +39,22 @@ public class GameLogic {
         }
         return null;
     }
+
     // returns the dealers first card
     public String getDealerFirstCard() {
         return dealer.getCards().get(0);
     }
+
     // gets the dealers hand
     public Hand getDealerHand() {
         return dealer;
     }
+
     // draws a card from the deck
     public String drawCardFromDeck() {
         return combinedDeck.drawCard();
     }
+
     // logic used to play for the dealer
     public void dealerPlay() {
         while (dealer.getTotalValue() < 17 || 
@@ -57,4 +63,7 @@ public class GameLogic {
         }
     }
 
+    public void hit(Hand hand) {
+        hand.addCard(drawCardFromDeck());
+    }
 }
