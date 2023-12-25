@@ -69,19 +69,19 @@ public class GameLogic {
             dealer.addCard(drawCardFromDeck());
         }
     }
-
+    // adds a card to the players hand
     public void hit(Hand hand) {
         hand.addCard(drawCardFromDeck());
     }
-
+    // returns the dark of cards
     public List<String> getDeckCards() {
         return combinedDeck.getCards();
     }
-
+    // gets a players index properly 
     public void addHandAfterCurrent(int currentPlayerIndex, Hand newHand) {
         players.add(currentPlayerIndex + 1, newHand);
     }
-
+    // retunrs how many players are in the game
     public int getNumberOfPlayers() {
         return players.size();
     }

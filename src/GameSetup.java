@@ -12,7 +12,7 @@ public class GameSetup {
         this.balance = initialBalance;
         this.initialBalance = initialBalance;
     }
-
+    // getters and setters for setting up the game
     public int getNumberOfDecks() {
         return numberOfDecks;
     }

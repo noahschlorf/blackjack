@@ -32,23 +32,4 @@ public class PlayerInteraction {
         return input.equalsIgnoreCase("yes");
     }
 
-    // Additional methods for displaying specific messages
-    public void displayInvalidBetMessage(int playerNumber) {
-        System.out.println("Invalid bet amount for player " + playerNumber
-                + ". Bet must be greater than 0 and less than or equal to balance.");
-    }
-
-    public void displayBustMessage() {
-        System.out.println("Sorry, you have busted!");
-    }
-
-    public void displayBlackjackMessage(int playerNumber) {
-        System.out.println("Congrats, player " + playerNumber + " has a blackjack!");
-    }
-
-    public void displayInvalidChoiceMessage() {
-        System.out.println("Invalid choice. Please choose again.");
-    }
-
-    // Add more methods as needed based on your game's requirements
 }
