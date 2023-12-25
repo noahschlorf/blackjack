@@ -4,6 +4,12 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        int numberOfDecks = 2;
+        int numberOfPlayers = 3;
+        boolean dealerHitsSoft17 = false;
+        double balance = 1000;
+        double initalBal = balance;
+        while(true){
         // game start
 
         /* 
@@ -18,10 +24,6 @@ public class Main {
         String input = scanner.nextLine();
         boolean dealerHitsSoft17 = input.equalsIgnoreCase("yes");
         */
-        int numberOfDecks = 1;
-        int numberOfPlayers = 10;
-        boolean dealerHitsSoft17 = false;
-        double balance = 1000;
 
         GameLogic game = new GameLogic(numberOfDecks, numberOfPlayers, dealerHitsSoft17);
 
@@ -48,7 +50,6 @@ public class Main {
         int i = 0;
         while (currentPlayer < game.getNumberOfPlayers()) {
             Hand playerHand = game.getPlayerHand(currentPlayer);
-            System.out.println("Player " + (i + 1) + "'s hand: " + playerHand);
             boolean turnEnded = false;
             if (playerHand.hasBlackjack()){
                 System.out.println("Congrats, player " + (i + 1) + " has a blackjack");
@@ -56,6 +57,7 @@ public class Main {
                 currentPlayer++;
             }
             while (!turnEnded) {
+                System.out.println("Player " + (i + 1) + "'s hand: " + playerHand);
                 boolean canSplit = playerHand.canSplit();
                 boolean canDoubleDown = playerHand.canDoubleDown();
                 
@@ -87,11 +89,13 @@ public class Main {
                         break;
                     case 3:
                         if (canDoubleDown) {
-                            playerHand.doubleBet();
+                            balance -= playerHand.getBet();
+                            playerHand.setBet(playerHand.getBet()*2);
+                            game.hit(playerHand);
                             turnEnded = true;
                             break;
                         }
-                        case 4:
+                    case 4:
                         if (canSplit) {
                             String splitCard = playerHand.removeCard();
                             Hand newHand = new Hand();
@@ -106,9 +110,7 @@ public class Main {
                     default:
                         System.out.println("Invalid choice. Please choose again.");
                 }
-                if (!turnEnded) {
-                    System.out.println("Player " + (i + 1) + "'s hand: " + game.getPlayerHand(i));
-                }
+                System.out.println("Player " + (i + 1) + "'s hand: " + playerHand);
                 if (turnEnded) {
                     currentPlayer++;
                 }
@@ -129,7 +131,7 @@ public class Main {
         for (i = 0; i < game.getNumberOfPlayers(); i++) {
             Hand playerHand = game.getPlayerHand(i);
             double betAmount = playerHand.getBet();
-            System.out.println("Player " + i+1 +" bet = " + playerHand.getBet());
+            System.out.println("Player " + (i+1) +" bet = " + playerHand.getBet());
             double payout = 0;
         
             // Calculate payout based on the outcome
@@ -153,8 +155,22 @@ public class Main {
             System.out.println("Player " + (i + 1) + " outcome: " + (payout > betAmount ? "Win" : "Lose"));
             System.out.println("Player " + (i + 1) + " new balance: $" + balance);
         }
-        scanner.close();
+        
+        if (balance <= 0) {
+            System.out.println("You are out of balance. Game over.");
+            break;
+        }
 
+        System.out.println("Do you want to play another round? (yes/no): ");
+        scanner.nextLine();
+        String playAgain = scanner.nextLine();
+        if (!playAgain.equalsIgnoreCase("yes")) {
+            break;
+        }
+    }
+        System.out.println("Thank you for playing!");
+        System.out.println("Your total profit/loss was: $" + (balance-initalBal));
+        scanner.close();
     }
 
     public static void printPlayerHandsAndCheckBlackjack(GameLogic game, int numberOfPlayers) {

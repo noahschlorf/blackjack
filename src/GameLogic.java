@@ -26,8 +26,6 @@ public class GameLogic {
             /*playerHand.addCard("8 of Diamonds");
             playerHand.addCard("8 of Hearts");
             */
-            
-            
             playerHand.addCard(combinedDeck.drawCard());
             playerHand.addCard(combinedDeck.drawCard());
             
