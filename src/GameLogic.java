@@ -19,17 +19,18 @@ public class GameLogic {
         // combines the deck into one and shuffles
         combinedDeck = new CardDeck(allDecksCombined);
         combinedDeck.shuffle();
-        // Initialize the players list and draw 2 cards for all players to start the game
+        // Initialize the players list and draw 2 cards for all players to start the
+        // game
         players = new ArrayList<>(); // Initialized as ArrayList
         for (int i = 0; i < numberOfPlayers; i++) {
             Hand playerHand = new Hand();
-            /*playerHand.addCard("8 of Diamonds");
-            playerHand.addCard("8 of Hearts");
-            */
+            /*
+             * playerHand.addCard("8 of Diamonds");
+             * playerHand.addCard("8 of Hearts");
+             */
             playerHand.addCard(combinedDeck.drawCard());
             playerHand.addCard(combinedDeck.drawCard());
-            
-            
+
             players.add(playerHand); // Add the hand to the list
         }
         // makes the dealer's hand
@@ -63,8 +64,8 @@ public class GameLogic {
 
     // logic used to play for the dealer
     public void dealerPlay() {
-        while (dealer.getTotalValue() < 17 || 
-               (dealerHitsSoft17 && dealer.getTotalValue() == 17 && dealer.hasAce())) {
+        while (dealer.getTotalValue() < 17 ||
+                (dealerHitsSoft17 && dealer.getTotalValue() == 17 && dealer.hasAce())) {
             dealer.addCard(drawCardFromDeck());
         }
     }
@@ -84,7 +85,5 @@ public class GameLogic {
     public int getNumberOfPlayers() {
         return players.size();
     }
-    
-    
-    
+
 }

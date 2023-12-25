@@ -20,24 +20,29 @@ public class Hand {
     public void addCard(String card) {
         cards.add(card);
         checkForBlackjack();
-    }   
+    }
+
     // removes a card from the players hand
     public String removeCard() {
         String removed = cards.remove(0);
         return removed;
     }
+
     // checks if the hand is a blackjack
     private void checkForBlackjack() {
         this.hasBlackjack = (cards.size() == 2 && getTotalValue() == 21);
     }
-    //gets the cards in the hand
+
+    // gets the cards in the hand
     public List<String> getCards() {
         return cards;
     }
+
     // returns true if there is a blackjack false otherwise
     public boolean hasBlackjack() {
         return hasBlackjack;
     }
+
     // determines if the player can split
     public boolean canSplit() {
         if (cards.size() == 2) {
@@ -46,7 +51,7 @@ public class Hand {
             return rank1 == rank2;
         }
         return false;
-    }       
+    }
 
     public int getValue(String card) {
         String rank = card.split(" ")[0];
@@ -61,24 +66,27 @@ public class Hand {
                 return Integer.parseInt(rank);
         }
     }
-    
 
     // determines if the player can double down
     public boolean canDoubleDown() {
         return cards.size() == 2 && !hasBlackjack;
     }
+
     // used to set the bet size for a given hand
     public void setBet(double betAmount) {
         this.bet = betAmount;
     }
+
     // returns the current size of a bet for the players hand
     public double getBet() {
         return bet;
     }
+
     // used for double down
     public void doubleBet() {
         this.bet *= 2;
     }
+
     // returns the value of the current hand
     public int getTotalValue() {
         int totalValue = 0;
@@ -112,8 +120,9 @@ public class Hand {
     // clears the hand
     public void clearHand() {
         cards.clear();
-        hasBlackjack = false; 
+        hasBlackjack = false;
     }
+
     // true if the current hand has an ace
     public boolean hasAce() {
         for (String card : cards) {
@@ -123,11 +132,11 @@ public class Hand {
         }
         return false;
     }
-    
+
     // returns a string representation of the hand
     public String toString() {
         String status = String.join(", ", cards) + " | Value: " + getTotalValue();
-        
+
         if (hasBlackjack) {
             status += ANSI_GREEN + " (Blackjack!)" + ANSI_RESET;
         }
