@@ -1,38 +1,17 @@
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int numberOfDecks = 2;
-        int numberOfPlayers = 3;
-        boolean dealerHitsSoft17 = false;
-        double balance = 1000;
+        GameSetup setup = new GameSetup(1, 3, false, 1000); // Initialize game setup
+        double balance = setup.getBalance();
         double initalBal = balance;
         while (true) {
-            // game start
 
-            /*
-             * System.out.print("Enter the number of decks: ");
-             * int numberOfDecks = scanner.nextInt();
-             * 
-             * System.out.print("Enter the number of players: ");
-             * int numberOfPlayers = scanner.nextInt();
-             * 
-             * System.out.println("Should the dealer hit on a soft 17? (yes/no): ");
-             * scanner.nextLine();
-             * String input = scanner.nextLine();
-             * boolean dealerHitsSoft17 = input.equalsIgnoreCase("yes");
-             */
+            GameLogic game = new GameLogic(setup.getNumberOfDecks(), setup.getNumberOfPlayers(),
+                    setup.isDealerHitsSoft17());
 
-            GameLogic game = new GameLogic(numberOfDecks, numberOfPlayers, dealerHitsSoft17);
-
-            for (int i = 0; i < numberOfPlayers; i++) {
-                /*
-                 * System.out.print("Enter the bet you would like to place for player " + (i +
-                 * 1) + ": ");
-                 * double betAmount = scanner.nextDouble();
-                 */
+            for (int i = 0; i < setup.getNumberOfPlayers(); i++) {
                 double betAmount = 10;
                 if (betAmount > 0 && betAmount <= balance) {
                     game.getPlayerHand(i).setBet(betAmount);
@@ -44,7 +23,7 @@ public class Main {
             }
             System.out.println("\u001B[32mBalance is: $" + balance + "\u001B[0m");
             // prints out the player hands and checks for blackjack
-            printPlayerHandsAndCheckBlackjack(game, numberOfPlayers);
+            printPlayerHandsAndCheckBlackjack(game, setup.getNumberOfPlayers());
             // shows one dealer card
             System.out.println("\u001B[91mDealer's shown card: " + game.getDealerFirstCard() + "\u001B[0m");
 
@@ -164,6 +143,8 @@ public class Main {
                 System.out.println("You are out of balance. Game over.");
                 break;
             }
+
+            setup.updateBalance(balance - setup.getBalance());
 
             System.out.println("Do you want to play another round? (yes/no): ");
             scanner.nextLine();
