@@ -1,18 +1,33 @@
+# Blackjack Game
+
+## Welcome to the Blackjack Game Repository
+This Java-based project provides an engaging way to play the classic casino game of Blackjack directly from your console. It perfectly blends strategy and luck, challenging you to beat the dealer without going bust. Experience the thrill of Blackjack like never before!
+
+## Features
+
+- **Dynamic Game Setup:** Tailor your experience with customizable options such as the number of decks, the number of players, and the starting balance.
+- **Interactive Gameplay:** Engage in real-time decision-making; whether to hit, stand, double down, or split.
+- **Automatic Game Logic:** Enjoy a seamless gaming experience with automated card shuffling, hand evaluation, and bet management.
+- **Console-Based UI:** A clear and colorful interface displays hands, bets, and game outcomes, enhancing your console gaming experience.
+
 ## Getting Started
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+1. **Clone the Repository:** Download the project to your local machine.
+2. **Compile the Java Files:** Navigate to the `src` directory and compile the Java files.
+3. **Launch the Game:** Execute `Main.java`, the main entry point of the application, to start your Blackjack adventure.
 
-## Folder Structure
+## Running the Game
 
-The workspace contains two folders by default, where:
+1. Compile the Java files located in the `src` directory.
+2. Run the `Main` class to initiate the game.
+3. Follow the on-screen instructions to set up your game and begin your Blackjack journey!
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Code Structure
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+- `src`: Houses all Java source files.
+  - `Main.java`: The primary entry point of the application.
+  - `GameLogic.java`: Manages the core mechanics of the game.
+  - `GameDisplay.java`: Responsible for the game's display and user interface.
+  - `CardDeck.java`: Represents the deck of cards used in the game.
+  - `Hand.java`: Models a hand belonging to a player or the dealer.
+  - Additional classes that support game setup and player interactions.
