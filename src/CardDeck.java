@@ -25,6 +25,7 @@ public class CardDeck {
                 cards.add(rank + " of " + suit);
             }
         }
+
     }
 
     // shuffles the deck of cards
