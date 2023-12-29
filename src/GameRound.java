@@ -56,9 +56,11 @@ public class GameRound {
     private void playPlayerTurn(int playerIndex) {
         
         Hand playerHand = game.getPlayerHand(playerIndex);
+        CardDeck remainingDeck = game.getCardDeck();
         boolean turnEnded = false;
-
+        
         display.printPlayerHand(playerIndex + 1, playerHand);
+        display.printExpectedTotalAfterHit(playerHand, remainingDeck);
 
         if (playerHand.hasBlackjack()) {
             display.printBlackjackMessage(playerIndex + 1);
@@ -66,6 +68,7 @@ public class GameRound {
         }
         // actual game loop
         while (!turnEnded) {
+            display.printRemainingDeck(remainingDeck);
             display.printPlayerOptions(playerHand, playerIndex + 1);
             int choice = interaction.getPlayerChoice(playerHand);
             // gives the player the options available 

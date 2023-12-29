@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        GameSetup setup = new GameSetup(1, 3, false, 1000);
+        GameSetup setup = new GameSetup(1, 1, false, 1000);
 
         PlayerInteraction interaction = new PlayerInteraction(scanner);
         GameDisplay display = new GameDisplay();

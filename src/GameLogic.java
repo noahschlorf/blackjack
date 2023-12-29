@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameLogic {
     private CardDeck combinedDeck;
@@ -84,6 +86,41 @@ public class GameLogic {
     // retunrs how many players are in the game
     public int getNumberOfPlayers() {
         return players.size();
+    }
+    
+    public static double calculateEV(Hand currentHand, CardDeck remainingDeck) {
+        double total = 0;
+        Map<String, Integer> deckComposition = getDeckComposition(remainingDeck);
+
+        for (Map.Entry<String, Integer> entry : deckComposition.entrySet()) {
+            String card = entry.getKey();
+            int count = entry.getValue();
+            double probability = (double) count / remainingDeck.getCards().size();
+
+            Hand simulatedHand = new Hand(currentHand.getCards());
+            simulatedHand.addCard(card);
+            int handTotal = evaluateHand(simulatedHand);
+
+            total += probability * handTotal;
+        }
+
+        return total;
+    }
+
+    private static Map<String, Integer> getDeckComposition(CardDeck deck) {
+        Map<String, Integer> composition = new HashMap<>();
+        for (String card : deck.getCards()) {
+            composition.put(card, composition.getOrDefault(card, 0) + 1);
+        }
+        return composition;
+    }
+
+    private static int evaluateHand(Hand hand) {
+        return hand.getTotalValue(); 
+    }
+
+    public CardDeck getCardDeck(){
+        return this.combinedDeck;
     }
 
 }

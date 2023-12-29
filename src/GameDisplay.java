@@ -1,10 +1,11 @@
+import java.util.List;
+
 public class GameDisplay {
 
     // ANSI color codes for styling the console output
     private final String ANSI_RESET = "\u001B[0m";
     private final String ANSI_GREEN = "\u001B[32m";
     private final String ANSI_RED = "\u001B[91m";
-    private final String ANSI_YELLOW = "\u001B[33m";
 
     public GameDisplay() {
     }
@@ -90,5 +91,18 @@ public class GameDisplay {
 
     public void printPlayerTurnEnd(int playerNumber, Hand hand) {
         System.out.println("Player " + playerNumber + "'s turn is over. Here is their final hand: " + hand);
+    }
+
+    public void printExpectedTotalAfterHit(Hand playerHand, CardDeck remainingDeck) {
+        double expectedTotal = GameLogic.calculateEV(playerHand, remainingDeck);
+        System.out.println("Expected Total Value After a Hit: " + String.format("%.2f", expectedTotal));
+    }
+
+    public void printRemainingDeck(CardDeck remainingDeck) {
+        List<String> remainingCards = remainingDeck.getCards();
+        System.out.println("Remaining cards in the deck:");
+        for (String card : remainingCards) {
+            System.out.println(card);
+        }
     }
 }
