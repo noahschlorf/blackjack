@@ -9,6 +9,7 @@ public class Hand {
     private final String ANSI_GREEN = "\u001B[32m";
     private final String ANSI_YELLOW = "\u001B[33m";
     private final String ANSI_RESET = "\u001B[0m";
+    private final String ANSI_BLUE = "\u001B[34m";
 
     // used for keeping one players hand
     public Hand() {
@@ -135,7 +136,7 @@ public class Hand {
 
     // returns a string representation of the hand
     public String toString() {
-        String status = String.join(", ", cards) + " | Value: " + getTotalValue();
+        String status = String.join(", ", cards) + " | Value: " + ANSI_BLUE + getTotalValue() + ANSI_RESET;
 
         if (hasBlackjack) {
             status += ANSI_GREEN + " (Blackjack!)" + ANSI_RESET;

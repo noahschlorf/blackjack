@@ -10,8 +10,7 @@ public class GameDisplay {
     }
 
     public void printPlayerHand(int playerNumber, Hand hand) {
-        System.out.println("Player " + playerNumber + "'s hand: " + hand + " | Value: " + hand.getTotalValue()
-                + " | Bet: " + ANSI_YELLOW + "$" + hand.getBet() + ANSI_RESET);
+        System.out.println("Player " + playerNumber + "'s hand: " + hand);
     }
 
     public void printDealerFirstCard(String card) {
@@ -59,10 +58,26 @@ public class GameDisplay {
     }
 
     public void printOutcome(int playerNumber, double payout, Hand playerHand, Hand dealerHand) {
-        String result = payout > 0 ? "Win" : "Lose";
-        System.out.println("Player " + playerNumber + " " + result + ": Payout $" + payout + " | Player hand value: "
-                + playerHand.getTotalValue() + " | Dealer hand value: " + dealerHand.getTotalValue());
+        String result;
+    
+        if (playerHand.getTotalValue() > 21) {
+            result = "Lose"; // Player busts
+        } else if (dealerHand.getTotalValue() > 21) {
+            result = "Win"; // Dealer busts
+        } else if (playerHand.getTotalValue() > dealerHand.getTotalValue()) {
+            result = "Win"; // Higher value without busting
+        } else if (playerHand.getTotalValue() < dealerHand.getTotalValue()) {
+            result = "Lose"; // Lower value without busting
+        } else {
+            result = "Tie"; // Equal values
+        }
+    
+        System.out.println("Player " + playerNumber + " " + result + ": Payout $" + payout 
+                           + " | Player hand value: " + playerHand.getTotalValue() 
+                           + " | Dealer hand value: " + dealerHand.getTotalValue());
     }
+    
+    
 
     public void printGameOver() {
         System.out.println(ANSI_RED + "Game Over! You are out of balance." + ANSI_RESET);
@@ -74,7 +89,6 @@ public class GameDisplay {
     }
 
     public void printPlayerTurnEnd(int playerNumber, Hand hand) {
-        System.out.println("Player " + playerNumber + "'s turn is over. Here is their final hand: " + hand
-                + " | Value: " + hand.getTotalValue() + " | Bet: " + ANSI_YELLOW + "$" + hand.getBet() + ANSI_RESET);
+        System.out.println("Player " + playerNumber + "'s turn is over. Here is their final hand: " + hand);
     }
 }
