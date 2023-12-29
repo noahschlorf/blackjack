@@ -16,6 +16,10 @@ public class Hand {
         this.cards = new ArrayList<>();
         this.hasBlackjack = false;
     }
+    
+    public Hand(List<String> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
 
     // adds a card to the hand and checks for blackjack
     public void addCard(String card) {

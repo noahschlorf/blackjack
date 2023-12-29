@@ -3,9 +3,11 @@ import java.util.Scanner;
 public class PlayerInteraction {
     private Scanner scanner;
 
+
     public PlayerInteraction(Scanner scanner) {
         this.scanner = scanner;
     }
+
 
     // Modified to include player number and current balance
     public double getBetAmount(int playerNumber, double currentBalance) {
