@@ -87,6 +87,7 @@ public class GameLogic {
     public int getNumberOfPlayers() {
         return players.size();
     }
+    
     public static double calculateEV(Hand currentHand, CardDeck remainingDeck) {
         double total = 0;
         Map<String, Integer> deckComposition = getDeckComposition(remainingDeck);

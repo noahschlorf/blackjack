@@ -68,6 +68,7 @@ public class GameRound {
         }
         // actual game loop
         while (!turnEnded) {
+            display.printRemainingDeck(remainingDeck);
             display.printPlayerOptions(playerHand, playerIndex + 1);
             int choice = interaction.getPlayerChoice(playerHand);
             // gives the player the options available 
